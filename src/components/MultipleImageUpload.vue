@@ -661,12 +661,17 @@ export default {
       context.drawImage(this.$refs.camera, 0, 0, 450, 337.5);
       const canvas = this.$refs.canvas.toDataURL("image/jpeg")
           .replace("image/jpeg", "image/octet-stream");
-      let capturedPhotoFile = this.dataURLtoFile(canvas, 'myPhoto' + this.count + '.jpg')
+      let uniquePictureName = this.generateCapturePhotoName();
+      let capturedPhotoFile = this.dataURLtoFile(canvas, uniquePictureName + this.count + '.jpg')
       this.setImagesData(capturedPhotoFile, canvas)
       this.isCameraOpen = false
       this.imageUploader = true
       this.count++
       this.stopCameraStream()
+    },
+
+    generateCapturePhotoName(){
+      return  Math.random().toString(36).substring(2, 15)
     },
 
     dataURLtoFile(dataurl, filename) {
